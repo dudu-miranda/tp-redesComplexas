@@ -1,0 +1,13 @@
+ID	NOME	APELIDO	CIDADE
+1	{Eduardo Miranda}	[Dudu]	(Vargem Bonita)
+2	{Patricia Miranda}	[Patty]	(Vargem Bonita)
+3	{Matheus Miranda}	[Fufuco]	(Vargem Bonita)
+4	{Isadora Miranda}	[Isa]	(Vargem Bonita)
+5	{Luiz Reis}	[Luizinho]	(Vargem Bonita)
+6	{João Neto}	[Netinho]	(Vargem Bonita)
+7	{Rodrigo França}	[Rodrigo]	(Vargem Bonita)
+8	{Vera Lucia}	[Verinha]	(Vargem Bonita)
+9	{Cirilo Neto}	[Sasquat]	(Vargem Bonita)
+10	{Cid Cley França}	[Cid]	(Vargem Bonita)
+11	{Milta Rodrigues}	[Milta]	(Vargem Bonita)
+12	{Ryan França}	[Ryan]	(Vargem Bonita)

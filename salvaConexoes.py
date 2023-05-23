@@ -16,6 +16,11 @@ class ListarPessoasWindow(QDialog):
         label = QLabel("Selecione as pessoas:")
         vbox.addWidget(label)
 
+        # Adiciona o botão Limpar
+        btn_limpar = QPushButton("Limpar")
+        btn_limpar.clicked.connect(self.limpar_checkboxes)
+        vbox.addWidget(btn_limpar)
+
         # Adiciona a lista
         self.list_widget = QListWidget()
         vbox.addWidget(self.list_widget)
@@ -25,17 +30,27 @@ class ListarPessoasWindow(QDialog):
         with open(pessoas_file, "r") as f:
             next(f)  # ignora a primeira linha
             for line in f:
-                fields = line.strip().split()
+                fields = line.strip().split('\t')
                 if len(fields) >= 4:
                     nome, apelido, cidade = fields[1], fields[2], fields[3]
                     self.pessoas.append((fields[0], f"{nome}, {apelido}, {cidade}"))
+
         for id_, nome in self.pessoas:
-            item = QListWidgetItem(nome, self.list_widget)
-            checkbox = QCheckBox(self.list_widget)
-            self.list_widget.setItemWidget(item, checkbox)
+            item_widget = QWidget(self.list_widget)
+            item_layout = QHBoxLayout(item_widget)
+            checkbox = QCheckBox(item_widget)
+            label = QLabel(nome, item_widget)
+            item_layout.addWidget(checkbox)
+            item_layout.addWidget(label)
+            item_layout.setContentsMargins(0, 0, 0, 0)  # Remove as margens internas
+            item_layout.setStretch(1, 1)
+            item_layout.setStretch(2, 9)
             checkbox.stateChanged.connect(lambda state, id=id_: self.checkbox_changed(state, id))
             if id_ in preenchidos:
                 checkbox.setChecked(True)
+            list_item = QListWidgetItem(self.list_widget)
+            #list_item.setSizeHint(item_widget.sizeHint())  # Define o tamanho do item com base no widget interno
+            self.list_widget.setItemWidget(list_item, item_widget)
 
         # Adiciona o botão OK
         btn_ok = QPushButton("OK")
@@ -43,12 +58,20 @@ class ListarPessoasWindow(QDialog):
         vbox.addWidget(btn_ok)
 
         self.setLayout(vbox)
+        self.resize(800, 600)
+        
 
     def checkbox_changed(self, state, id):
         if state == 2:
             self.selected_persons_ids.append(id)
         else:
             self.selected_persons_ids.remove(id)
+
+
+    def limpar_checkboxes(self):
+        for checkbox in self.list_widget.findChildren(QCheckBox):
+            checkbox.setChecked(False)
+        self.selected_persons_ids = []
 
 
 class AddConnections(QWidget):
