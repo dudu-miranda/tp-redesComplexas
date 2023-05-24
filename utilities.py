@@ -5,6 +5,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 from community import community_louvain
 
+def create_graph(arq):
+    # Criar um grafo vazio
+    graph = nx.Graph()
+
+    # Carregar os dados do arquivo
+    with open(arq, 'r') as arquivo:
+        for line in arquivo:
+            # Dividir a linha em nós e arestas
+            data = line.strip().split(' ')
+            node1 = data[0]
+            node2 = data[1]
+
+            # Adicionar os nós e as arestas ao grafo
+            graph.add_node(node1)
+            graph.add_node(node2)
+            graph.add_edge(node1, node2)
+
+    return graph
+
+def remove_node(G, node):
+    pass
+    #Remove vértice e todas as arestas incindentes nele
+
+# To do
+# Aplicar outros métodos de comunidade
+
+# To do
+# Criar função de modularidade
+
 def degree(G,node = None):
     if node == None:
         return G.degree()
@@ -163,6 +192,7 @@ def plot_community(g):
 
     nx.draw(g, pos, node_color=list(partition.values())); plt.show()
     return
+
 
 G = nx.fast_gnp_random_graph(40, 0.25)
 plot_community(G)
