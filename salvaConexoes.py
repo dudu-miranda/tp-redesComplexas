@@ -33,7 +33,7 @@ class ListarPessoasWindow(QDialog):
                 fields = line.strip().split('\t')
                 if len(fields) >= 4:
                     nome, apelido, cidade = fields[1], fields[2], fields[3]
-                    self.pessoas.append((fields[0], f"{nome}, {apelido}, {cidade}"))
+                    self.pessoas.append((fields[0], f"{fields[0]} - {nome}, {apelido}, {cidade}"))
 
         for id_, nome in self.pessoas:
             item_widget = QWidget(self.list_widget)
