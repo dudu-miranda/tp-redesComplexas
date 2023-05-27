@@ -46,7 +46,7 @@ class ListarPessoasWindow(QDialog):
             item_layout.setStretch(1, 1)
             item_layout.setStretch(2, 9)
             checkbox.stateChanged.connect(lambda state, id=id_: self.checkbox_changed(state, id))
-            if id_ in preenchidos:
+            if id_ in preenchidos.split(','):
                 checkbox.setChecked(True)
             list_item = QListWidgetItem(self.list_widget)
             #list_item.setSizeHint(item_widget.sizeHint())  # Define o tamanho do item com base no widget interno
