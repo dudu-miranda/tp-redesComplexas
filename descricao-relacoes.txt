@@ -1,0 +1,13 @@
+1-Familia -> Pessoa de parentesco direto sendo irmão, pai e mãe. Pode também ser de parentesco indireto (tio, avó, primo, etc) cujo qual possui um vínculo muito forte.
+2-Melhor Amigo -> Pessoa que se tem alto nível de confiança e liberdade que foi construida/confirmada através do tempo e/ou experiências.
+3-Namorado(a)/Cônjuge -> Pessoa que se tem/teve um relacionamento amoroso não superficial no qual existe/existiu um vínculo afetivo.
+4-Amigo -> Pessoa que já teve vínculo afetivo maior porém não há contato regular e esse vinculo já não é tão forte quanto foi. Ou pessoa com um forte vínculo mas não há uma liberdade/confiança tão alto.
+5-Parente -> Pessoa que tem o laço sanguíneo, porém o vínculo não forte o suficiente para que possa ser considerado família, mas há afinidade na relação.
+6-Parça -> Pessoa que se conhece há pouco tempo mas há uma forte sintonia/sinergia, gostos parecidos, ideologia parecida, porém a relação não passou por tempo o suficiente para se criar confiança/liberdade.
+7-Professor -> Pessoa de quem você foi professor.
+8-Aluno -> Pessoa de quem você foi aluno.
+9-Colega -> Pessoa cujo qual o vínculo é o de pertencer a mesma classe, seja de escola, faculdade, curso, etc...
+10-Trabalho -> Pessoa cujo qual se tem uma relação puramente profissional.
+11-Cossanguineo -> Pessoa cujo qual o único vínculo é o de sangue.
+12-Ficante -> Pessoa cujo qual se teve algum tipo de relação amorosa, mas não foi criado nenhum vínculo afetivo, puramente carnal.
+13-Conhecido -> Pessoa cujo qual se sabe o nome e rosto, não possui vínculo significativo.
