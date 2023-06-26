@@ -8,6 +8,6 @@
 8-Aluno -> Pessoa de quem você foi aluno.
 9-Colega -> Pessoa cujo qual o vínculo é o de pertencer a mesma classe, seja de escola, faculdade, curso, etc...
 10-Trabalho -> Pessoa cujo qual se tem uma relação puramente profissional.
-11-Cossanguineo -> Pessoa cujo qual o único vínculo é o de sangue.
+11-Consanguíneo -> Pessoa cujo qual o único vínculo é o de sangue.
 12-Ficante -> Pessoa cujo qual se teve algum tipo de relação amorosa, mas não foi criado nenhum vínculo afetivo, puramente carnal.
 13-Conhecido -> Pessoa cujo qual se sabe o nome e rosto, não possui vínculo significativo.
