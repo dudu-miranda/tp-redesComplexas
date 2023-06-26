@@ -1,38 +1,132 @@
 import networkx as nx
-
+import re
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from community import community_louvain
+import community
 
-def create_graph(arq):
-    # Criar um grafo vazio
-    graph = nx.Graph()
+def create_graph(nome_arquivo, nome_arquivo_rel):
 
-    # Carregar os dados do arquivo
-    with open(arq, 'r') as arquivo:
-        for line in arquivo:
-            # Dividir a linha em nós e arestas
-            data = line.strip().split(' ')
-            node1 = data[0]
-            node2 = data[1]
+    grafo_list = [{"id": 0, "nome": "0", "apelido": "0", "cidade": "0"}]
 
-            # Adicionar os nós e as arestas ao grafo
-            graph.add_node(node1)
-            graph.add_node(node2)
-            graph.add_edge(node1, node2)
+    arquivo = open(nome_arquivo, 'r')
+    arquivo.readline()
 
-    return graph
+    for linha in arquivo:
+        new_node = {}
 
-def remove_node(G, node):
-    pass
-    #Remove vértice e todas as arestas incindentes nele
+        linha = linha.replace("\n", "")
 
-# To do
-# Aplicar outros métodos de comunidade
+        id_str = linha.split()[0]
+        id = int(id_str)
 
-# To do
-# Criar função de modularidade
+        nome = linha[linha.find('{')+1:linha.find('}')].strip()
+
+        apelido = linha[linha.find('[')+1:linha.find(']')].strip()
+
+        cidade = re.findall(r'\((.*?)\)', linha)[0].strip()
+
+        new_node["id"] = id
+        new_node["nome"] = nome
+        new_node["apelido"] = apelido
+        new_node["cidade"] = cidade
+
+        grafo_list.append(new_node)
+
+    arquivo.close()
+
+    g = nx.Graph()
+
+    for new_node in grafo_list:
+        
+        id = new_node['id']
+        nome = new_node['nome']
+        apelido = new_node['apelido']
+        cidade = new_node['cidade']
+
+        
+        g.add_node(id, nome=nome, apelido=apelido, cidade=cidade)
+
+    aresta_list = []
+
+    arquivo_rel = open(nome_arquivo_rel, 'r')
+
+    for linha in arquivo_rel:
+        node_1, node_2, peso = linha.replace("\n", "").split()
+
+        aresta_list.append({"node_1": int(node_1), "node_2": int(node_2), "peso": int(peso)})
+
+    for aresta in aresta_list:
+        node_1 = aresta['node_1']
+        node_2 = aresta['node_2']
+        peso = aresta['peso']
+        
+        g.add_edge(node_1, node_2, weight=peso)
+
+    return g
+
+def remove_node(remove_id, nome_arquivo, nome_arquivo_rel):
+
+    grafo_list = [{"id": 0, "nome": "0", "apelido": "0", "cidade": "0"}]
+
+    arquivo = open(nome_arquivo, 'r')
+    arquivo.readline()
+
+    for linha in arquivo:
+        new_node = {}
+
+        linha = linha.replace("\n", "")
+
+        id_str = linha.split()[0]
+        id = int(id_str)
+
+        nome = linha[linha.find('{')+1:linha.find('}')].strip()
+
+        apelido = linha[linha.find('[')+1:linha.find(']')].strip()
+
+        cidade = re.findall(r'\((.*?)\)', linha)[0].strip()
+
+        new_node["id"] = id
+        new_node["nome"] = nome
+        new_node["apelido"] = apelido
+        new_node["cidade"] = cidade
+
+        grafo_list.append(new_node)
+
+    arquivo.close()
+
+    g = nx.Graph()
+
+    for new_node in grafo_list:
+        
+        id = new_node['id']
+        nome = new_node['nome']
+        apelido = new_node['apelido']
+        cidade = new_node['cidade']
+
+        
+        g.add_node(id, nome=nome, apelido=apelido, cidade=cidade)
+
+    aresta_list = []
+
+    arquivo_rel = open(nome_arquivo_rel, 'r')
+
+    for linha in arquivo_rel:
+        node_1, node_2, peso = linha.replace("\n", "").split()
+
+        aresta_list.append({"node_1": int(node_1), "node_2": int(node_2), "peso": int(peso)})
+
+    for aresta in aresta_list:
+        node_1 = aresta['node_1']
+        node_2 = aresta['node_2']
+        peso = aresta['peso']
+
+
+        if node_1 != remove_id and node_2 != remove_id:
+            g.add_edge(node_1, node_2, weight=peso)
+
+    return g
 
 def degree(G,node = None):
     if node == None:
@@ -190,9 +284,60 @@ def plot_community(g):
     partition = community_louvain.best_partition(g)
     pos = community_layout(g, partition)
 
-    nx.draw(g, pos, node_color=list(partition.values())); plt.show()
+    nx.draw(g, pos, node_color=list(partition.values()), alpha=0.5, with_labels=False, node_size=20,); plt.show()
     return
 
+def plot_greedy_modularity_communities(g):
+    # Definir layout (posicionamento dos nós)
+    pos = nx.spring_layout(g)
 
-G = nx.fast_gnp_random_graph(40, 0.25)
-plot_community(G)
+    # Detectar as comunidades no g (usando um algoritmo de detecção de comunidades)
+    comunidades = nx.community.greedy_modularity_communities(g)
+
+    # Criar um dicionário que mapeia cada nó a sua comunidade
+    comunidade_dict = {}
+    for i, comunidade in enumerate(comunidades):
+        for node in comunidade:
+            comunidade_dict[node] = i
+
+    cores = ['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'brown', 'orange']  
+    nx.draw_networkx_nodes(g, pos, nodelist=comunidade_dict.keys(),
+                        node_color=[cores[comunidade_dict[node]] for node in comunidade_dict],
+                        node_size=10, alpha=0.5)
+
+    nx.draw_networkx_edges(g, pos, alpha=0.1)
+
+    plt.axis('off')
+
+    return plt.show()
+
+def plot_best_partition_communities(g):
+    # Definir layout (posicionamento dos nós)
+    pos = nx.spring_layout(g)
+
+    # Executar o algoritmo de detecção de comunidades (Louvain)
+    particionamento = community.best_partition(g)
+
+    # Obter o número de comunidades
+    comunidades = set(particionamento.values())
+    num_comunidades = len(comunidades)
+
+    print("Número de comunidades:", num_comunidades)
+
+    # Plotar os nós, colorindo cada comunidade de uma cor diferente
+    cores = ['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'brown', 'orange']  
+    nx.draw_networkx_nodes(g, pos, node_size=10,
+                        node_color=[cores[particionamento[node]] for node in g.nodes()],
+                        alpha=0.5)
+
+    # Plotar as arestas
+    nx.draw_networkx_edges(g, pos, alpha=0.1)
+
+    # Remover os eixos
+    plt.axis('off')
+
+    # Exibir o g
+    return plt.show()
+
+# G = nx.fast_gnp_random_graph(300, 0.75)
+# plot_community(G)
