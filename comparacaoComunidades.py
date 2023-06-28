@@ -1,9 +1,4 @@
 
-
-# pip install scikit-learn
-
-from sklearn.metrics.cluster import adjusted_rand_score
-
 def community_similarity(l1, l2):
     totalElementos = 0
     similaridade = 0
@@ -33,8 +28,8 @@ print(f"A similaridade entre as formações de comunidades é: {similarity}")
 '''
 Nesse exemplo, as listas l1 e l2 representam as formações de comunidades nos grafos. 
 Cada sublista dentro das listas l1 e l2 representa uma comunidade separada. 
-O resultado do ARI será um valor entre -1 e 1, em que 1 indica uma similaridade perfeita, 
-0 indica uma similaridade aleatória e -1 indica uma dissimilaridade perfeita.
+O resultado do será um valor entre 0 e 1, em que 1 indica uma similaridade perfeita, 
+e 0 indica a ausência de similaridade.
 '''
 
 
