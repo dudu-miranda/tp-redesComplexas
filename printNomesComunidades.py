@@ -1,6 +1,4 @@
 
-# pip install scikit-learn
-
 def printComunidades(l1, arq):
     pessoasArquivo = {}
     with open(arq, "r") as f:
@@ -21,5 +19,5 @@ def printComunidades(l1, arq):
 
 
 l1 = [[1], [243], [2,  3,  4,  5,  6,  7,  8,  9,  10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21]]
-arq = 'guilherme.txt'
+arq = 'grafos/guilherme/guilherme.txt'
 printComunidades(l1, arq)

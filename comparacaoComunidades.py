@@ -31,6 +31,3 @@ Cada sublista dentro das listas l1 e l2 representa uma comunidade separada.
 O resultado do será um valor entre 0 e 1, em que 1 indica uma similaridade perfeita, 
 e 0 indica a ausência de similaridade.
 '''
-
-
-
